@@ -15,15 +15,17 @@ const Slide: React.FC<SlideProps> = ({ slide, lang }) => {
     <div className={`flex flex-col lg:flex-row gap-8 lg:gap-16 items-start lg:items-center w-full h-full max-h-[85vh] pt-6 lg:pt-0 ${isRightLayout ? 'lg:flex-row-reverse' : ''}`}>
       {/* Content Column */}
       <div className="flex-1 flex flex-col justify-start lg:justify-center space-y-6 lg:space-y-10 w-full overflow-hidden">
-        <div className="space-y-4 lg:space-y-6">
-          <div 
+        <div className="mb-8 lg:mb-12">
+          <span
             className="inline-flex items-center space-x-2 px-3 py-1.5 rounded-xl text-[9px] font-black uppercase tracking-widest shadow-sm"
             style={{ backgroundColor: `${slide.accentColor}10`, color: slide.accentColor }}
           >
             <span className="material-icons text-sm">{slide.badgeIcon}</span>
             <span>{slide.badge}</span>
-          </div>
-          
+          </span>
+        </div>
+
+        <div>
           <h1 className="text-4xl lg:text-6xl xl:text-7xl font-black tracking-tight text-gray-900 leading-[0.98] lg:leading-[1.05]">
             {slide.title.split(' ').map((word, idx) => {
               const highlights = [
