@@ -12,10 +12,10 @@ const Slide: React.FC<SlideProps> = ({ slide, lang }) => {
   const isRightLayout = slide.layout === 'right';
   const isFullscreen = slide.layout === 'fullscreen';
 
-  // Fullscreen layout - just display the image
+  // Fullscreen layout - display the image to fit within viewport without cropping
   if (isFullscreen) {
     return (
-      <div className="w-full h-full flex items-center justify-center">
+      <div className="w-screen h-screen flex items-center justify-center bg-black overflow-hidden">
         <img
           alt="Slide"
           className="max-w-full max-h-full object-contain"

@@ -7,6 +7,7 @@ import { translations, Language } from './translations';
 const App: React.FC = () => {
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [showStartScreen, setShowStartScreen] = useState(true);
   const containerRef = useRef<HTMLDivElement>(null);
 
   // French only (no language toggle)
@@ -32,6 +33,12 @@ const App: React.FC = () => {
     }
   };
 
+  const startPresentation = () => {
+    containerRef.current?.requestFullscreen();
+    setIsFullscreen(true);
+    setShowStartScreen(false);
+  };
+
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'Enter') nextSlide();
@@ -53,15 +60,72 @@ const App: React.FC = () => {
   }, [nextSlide, prevSlide]);
 
   const currentSlide = slides[currentSlideIndex];
+  const isFullscreenSlide = currentSlide.layout === 'fullscreen';
+
+  // Start screen overlay
+  if (showStartScreen) {
+    return (
+      <div
+        ref={containerRef}
+        className="h-screen w-full flex flex-col items-center justify-center bg-gradient-to-br from-blue-500 to-blue-600 select-none"
+      >
+        <div className="text-center space-y-8">
+          <div className="flex items-center justify-center space-x-3 mb-4">
+            <span className="text-white text-5xl font-black tracking-tight">PIVOT</span>
+          </div>
+          <p className="text-white/80 text-lg max-w-md">
+            Présentation pour les employés
+          </p>
+          <button
+            onClick={startPresentation}
+            className="px-8 py-4 bg-white text-blue-600 font-bold text-lg rounded-2xl shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 flex items-center space-x-3 mx-auto"
+          >
+            <span className="material-icons">fullscreen</span>
+            <span>Commencer la présentation</span>
+          </button>
+          <p className="text-white/60 text-sm">
+            Appuyez sur Esc pour quitter le mode plein écran
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  // For fullscreen slides, render without any chrome
+  if (isFullscreenSlide) {
+    return (
+      <div
+        ref={containerRef}
+        className="h-screen w-screen overflow-hidden select-none relative"
+      >
+        <Slide slide={currentSlide} lang={lang} />
+
+        {/* Navigation Overlays - invisible until hover */}
+        <div className="absolute inset-y-0 left-0 w-20 cursor-pointer z-40 opacity-0 hover:opacity-100 transition-opacity flex items-center justify-center" onClick={prevSlide}>
+          <span className="material-icons text-white/50 text-5xl drop-shadow-lg">chevron_left</span>
+        </div>
+        <div className="absolute inset-y-0 right-0 w-20 cursor-pointer z-40 opacity-0 hover:opacity-100 transition-opacity flex items-center justify-center" onClick={nextSlide}>
+          <span className="material-icons text-white/50 text-5xl drop-shadow-lg">chevron_right</span>
+        </div>
+
+        {/* Slide counter - bottom center, subtle */}
+        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-40 opacity-0 hover:opacity-100 transition-opacity">
+          <span className="text-[10px] font-bold text-white/60 bg-black/20 px-3 py-1 rounded-full backdrop-blur-sm">
+            {currentSlideIndex + 1} / {slides.length}
+          </span>
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <div 
+    <div
       ref={containerRef}
       className="h-screen w-full flex flex-col overflow-hidden bg-white select-none"
     >
-      {/* Main Content Area - Strictly sizing to viewport */}
+      {/* Main Content Area */}
       <main className="flex-grow flex items-center justify-center relative overflow-hidden px-8 lg:px-16">
-        <div key={`${lang}-${currentSlideIndex}`} className="slide-active w-full max-w-[1600px] h-full flex items-center">
+        <div key={`${lang}-${currentSlideIndex}`} className="slide-active h-full flex items-center w-full max-w-[1600px]">
           <Slide slide={currentSlide} lang={lang} />
         </div>
 
@@ -78,7 +142,7 @@ const App: React.FC = () => {
       <div className="h-12 border-t border-gray-50 flex items-center justify-center space-x-8 px-8 flex-shrink-0">
         <div className="flex space-x-3">
           {slides.map((_, idx) => (
-            <button 
+            <button
               key={idx}
               onClick={() => setCurrentSlideIndex(idx)}
               className={`h-1.5 transition-all duration-500 rounded-full ${idx === currentSlideIndex ? 'w-10 bg-primary' : 'w-2 bg-gray-200'}`}
