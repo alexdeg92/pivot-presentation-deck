@@ -96,7 +96,7 @@ const App: React.FC = () => {
     return (
       <div
         ref={containerRef}
-        className="h-screen w-screen overflow-hidden select-none relative"
+        className="fixed inset-0 w-full h-full overflow-hidden select-none"
       >
         <Slide slide={currentSlide} lang={lang} />
 
@@ -124,8 +124,8 @@ const App: React.FC = () => {
       className="h-screen w-full flex flex-col overflow-hidden bg-white select-none"
     >
       {/* Main Content Area */}
-      <main className="flex-grow flex items-center justify-center relative overflow-hidden px-8 lg:px-16">
-        <div key={`${lang}-${currentSlideIndex}`} className="slide-active h-full flex items-center w-full max-w-[1600px]">
+      <main className="flex-grow flex items-center justify-center relative overflow-hidden">
+        <div key={`${lang}-${currentSlideIndex}`} className="slide-active h-full flex items-center w-full">
           <Slide slide={currentSlide} lang={lang} />
         </div>
 
@@ -138,8 +138,8 @@ const App: React.FC = () => {
         </div>
       </main>
 
-      {/* Slide Navigation Dots & Info */}
-      <div className="h-12 border-t border-gray-50 flex items-center justify-center space-x-8 px-8 flex-shrink-0">
+      {/* Slide Navigation Dots & Info - floating at bottom */}
+      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-50 flex items-center space-x-8">
         <div className="flex space-x-3">
           {slides.map((_, idx) => (
             <button

@@ -12,13 +12,13 @@ const Slide: React.FC<SlideProps> = ({ slide, lang }) => {
   const isRightLayout = slide.layout === 'right';
   const isFullscreen = slide.layout === 'fullscreen';
 
-  // Fullscreen layout - display the image to fit within viewport without cropping
+  // Fullscreen layout - display the image to fill viewport without cropping
   if (isFullscreen) {
     return (
-      <div className="w-screen h-screen flex items-center justify-center bg-black overflow-hidden">
+      <div className="fixed inset-0 w-full h-full overflow-hidden bg-[#3B9EFF]">
         <img
           alt="Slide"
-          className="max-w-full max-h-full object-contain"
+          className="absolute inset-0 w-full h-full object-contain"
           src={slide.image}
         />
       </div>
@@ -26,7 +26,7 @@ const Slide: React.FC<SlideProps> = ({ slide, lang }) => {
   }
 
   return (
-    <div className={`flex flex-col lg:flex-row gap-8 lg:gap-16 items-start lg:items-center w-full h-full max-h-[85vh] pt-6 lg:pt-0 ${isRightLayout ? 'lg:flex-row-reverse' : ''}`}>
+    <div className={`flex flex-col lg:flex-row gap-8 lg:gap-16 items-start lg:items-center w-full h-full max-h-[85vh] pt-6 lg:pt-0 px-8 lg:px-16 xl:px-24 ${isRightLayout ? 'lg:flex-row-reverse' : ''}`}>
       {/* Content Column */}
       <div className="flex-1 flex flex-col justify-start lg:justify-center space-y-6 lg:space-y-10 w-full overflow-hidden">
         <div className="mb-8 lg:mb-12">
@@ -74,7 +74,7 @@ const Slide: React.FC<SlideProps> = ({ slide, lang }) => {
       </div>
 
       {/* Visual Column */}
-      <div className="flex-1 relative w-full h-full flex items-center justify-center min-h-[300px] lg:min-h-0">
+      <div className={`flex-1 relative w-full h-full flex items-center min-h-[300px] lg:min-h-0 ${isRightLayout ? 'justify-start lg:pl-8' : 'justify-end lg:pr-8'}`}>
         <div className="relative z-10 w-full max-w-[600px] xl:max-w-[700px]">
           <img
             alt="Slide Graphic"
