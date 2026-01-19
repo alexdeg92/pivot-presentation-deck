@@ -15,7 +15,7 @@ const Slide: React.FC<SlideProps> = ({ slide, lang }) => {
   // Fullscreen layout - display the image to fill viewport without cropping
   if (isFullscreen) {
     return (
-      <div className="fixed inset-0 w-full h-full overflow-hidden bg-[#3B9EFF]">
+      <div className="absolute inset-0 w-full h-full overflow-hidden bg-[#3B9EFF] pointer-events-none">
         <img
           alt="Slide"
           className="absolute inset-0 w-full h-full object-contain"

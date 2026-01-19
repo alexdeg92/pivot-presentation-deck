@@ -23,6 +23,19 @@ const App: React.FC = () => {
     setCurrentSlideIndex((prev) => (prev - 1 + slides.length) % slides.length);
   }, [slides.length]);
 
+  // Click anywhere to navigate: left 15% goes back, rest goes forward
+  const handleScreenClick = useCallback((e: React.MouseEvent) => {
+    const clickX = e.clientX;
+    const screenWidth = window.innerWidth;
+    const leftThreshold = screenWidth * 0.15; // 15% from left edge
+    
+    if (clickX < leftThreshold) {
+      prevSlide();
+    } else {
+      nextSlide();
+    }
+  }, [nextSlide, prevSlide]);
+
   const toggleFullscreen = () => {
     if (!document.fullscreenElement) {
       containerRef.current?.requestFullscreen();
@@ -100,16 +113,14 @@ const App: React.FC = () => {
       >
         <Slide slide={currentSlide} lang={lang} />
 
-        {/* Navigation Overlays - invisible until hover */}
-        <div className="absolute inset-y-0 left-0 w-20 cursor-pointer z-40 opacity-0 hover:opacity-100 transition-opacity flex items-center justify-center" onClick={prevSlide}>
-          <span className="material-icons text-white/50 text-5xl drop-shadow-lg">chevron_left</span>
-        </div>
-        <div className="absolute inset-y-0 right-0 w-20 cursor-pointer z-40 opacity-0 hover:opacity-100 transition-opacity flex items-center justify-center" onClick={nextSlide}>
-          <span className="material-icons text-white/50 text-5xl drop-shadow-lg">chevron_right</span>
-        </div>
+        {/* Click overlay for navigation */}
+        <div 
+          className="absolute inset-0 z-50 cursor-pointer"
+          onClick={handleScreenClick}
+        />
 
         {/* Slide counter - bottom center, subtle */}
-        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-40 opacity-0 hover:opacity-100 transition-opacity">
+        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-60 opacity-0 hover:opacity-100 transition-opacity pointer-events-none">
           <span className="text-[10px] font-bold text-white/60 bg-black/20 px-3 py-1 rounded-full backdrop-blur-sm">
             {currentSlideIndex + 1} / {slides.length}
           </span>
@@ -128,15 +139,13 @@ const App: React.FC = () => {
         <div key={`${lang}-${currentSlideIndex}`} className="slide-active h-full flex items-center w-full">
           <Slide slide={currentSlide} lang={lang} />
         </div>
-
-        {/* Navigation Overlays */}
-        <div className="absolute inset-y-0 left-0 w-16 cursor-pointer z-40 opacity-0 hover:opacity-100 transition-opacity flex items-center justify-center bg-gradient-to-r from-white/20 to-transparent" onClick={prevSlide}>
-           <span className="material-icons text-gray-400 text-4xl">chevron_left</span>
-        </div>
-        <div className="absolute inset-y-0 right-0 w-16 cursor-pointer z-40 opacity-0 hover:opacity-100 transition-opacity flex items-center justify-center bg-gradient-to-l from-white/20 to-transparent" onClick={nextSlide}>
-           <span className="material-icons text-gray-400 text-4xl">chevron_right</span>
-        </div>
       </main>
+
+      {/* Click overlay for navigation */}
+      <div 
+        className="absolute inset-0 z-40 cursor-pointer"
+        onClick={handleScreenClick}
+      />
 
       {/* Slide Navigation Dots & Info - floating at bottom */}
       <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-50 flex items-center space-x-8">
@@ -144,7 +153,7 @@ const App: React.FC = () => {
           {slides.map((_, idx) => (
             <button
               key={idx}
-              onClick={() => setCurrentSlideIndex(idx)}
+              onClick={(e) => { e.stopPropagation(); setCurrentSlideIndex(idx); }}
               className={`h-1.5 transition-all duration-500 rounded-full ${idx === currentSlideIndex ? 'w-10 bg-primary' : 'w-2 bg-gray-200'}`}
             />
           ))}
