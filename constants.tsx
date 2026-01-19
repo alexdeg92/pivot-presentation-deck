@@ -1,96 +1,113 @@
 
 import { SlideData } from './types';
 
+// Helper to create a fullscreen slide
+const fullscreenSlide = (id: string, image: string): SlideData => ({
+  id,
+  badge: "",
+  badgeIcon: "",
+  title: "",
+  subtitle: "",
+  layout: 'fullscreen',
+  accentColor: '#0088FF',
+  features: [],
+  image,
+  uiCards: [],
+  testimonial: { quote: "", author: "", role: "", avatar: "" }
+});
+
+// Story flow:
+// 1. Cover - Introduction
+// 2. L'histoire de Pivot - The founders
+// 3. The Table (disconnected) - Everyone at the restaurant tech table, but NOT connected
+// 4. Le problème des restaurateurs - The pain points
+// 5. The Table (connected) - Pivot as the BRIDGE connecting everyone
+// 6. Pivot pour les franchisés - Value proposition
+// 7. KPIs & Références - Traction and social proof
+// 8. Nous vs la Concurrence - Competitive advantage
+// 9. Équipe - The team
+// 10. Nos valeurs - Company values
+// 11. Votre rôle - What we need from you
+// 12. Closing message - "Ils s'occupent des clients, Nous on gère tout le reste"
+// 13. Questions - Q&A
+
 export const SLIDES: Record<'en' | 'fr', SlideData[]> = {
   en: [
+    fullscreenSlide("cover", "/Cover 3.png"),
+    fullscreenSlide("story-intro", "/Page.png"),
     {
-      id: "the-table",
-      badge: "The Observation",
-      badgeIcon: "restaurant",
-      title: "It all started around the table",
-      subtitle: "We took a seat at the restaurant tech table and saw specialized giants: Reservations, POS, Payroll, and Inventory. We realized nobody was talking to each other. So we decided to take the center and bring everyone together.",
-      layout: 'left',
-      accentColor: '#0088FF',
-      features: [],
-      // Vite serves files in `public/` from the site root.
-      image: "/image.png",
-      uiCards: [],
-      testimonial: {
-        quote: "The table was full, but the systems were silent.",
-        author: "Founder team",
-        role: "THE VISION",
-        avatar: "https://i.pravatar.cc/150?u=pivot"
-      }
-    },
-    {
-      id: "the-connection",
-      badge: "The Outcome",
-      badgeIcon: "bolt",
-      title: "Automation through Connection",
-      subtitle: "By connecting with each of them, we realized we could automate payroll. Furthermore, we automate tips via POS sync and co-pilot the restaurant by spotting problematic shifts.",
-      layout: 'right',
-      accentColor: '#10b981',
-      features: [
-        { icon: "payments", title: "Automated Payroll", description: "Direct integration with software like Employeur D." },
-        { icon: "monetization_on", title: "Tip Automation", description: "Real-time calculation and distribution from POS data." },
-        { icon: "psychology", title: "Operational Co-pilot", description: "Detecting labor issues before they impact your margins." }
-      ],
-      image: "https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&q=80&w=1200",
-      uiCards: [
-        { label: "PAYROLL", value: "Automated", type: 'stat', position: "top-10 -left-12" },
-        { label: "TIPS", value: "POS Synced", type: 'pos', position: "bottom-12 -right-10" }
-      ],
-      testimonial: {
-        quote: "Connecting the dots allowed us to finally focus on our guests.",
-        author: "Sarah Jenkins",
-        role: "Operator",
-        avatar: "https://i.pravatar.cc/150?u=sarah"
-      }
-    }
-  ],
-  fr: [
-    {
-      id: "the-table",
+      id: "table-disconnected",
       badge: "L'Observation",
       badgeIcon: "restaurant",
       title: "Tout a commencé autour de la table",
-      subtitle: "On a commencé en prenant une place autour de la restaurant tech et la, on a vu qu'il y avait des gens autours de la table, plateforme de réservation, POS, Paie et inventaire. On s'est rendu compte que personne se parlait. Donc on s'est dit qu'on devait prendre le centre et rassembler tout le monde.",
+      subtitle: "On a pris une place autour de la restaurant tech et là, on a vu qu'il y avait des gens autour de la table: plateforme de réservation, POS, Paie et inventaire. Mais personne ne se parlait.",
       layout: 'left',
       accentColor: '#0088FF',
       features: [],
       image: "/image.png",
       uiCards: [],
-      testimonial: {
-        quote: "Les outils étaient là, mais le dialogue était absent.",
-        author: "Équipe fondatrice",
-        role: "LA VISION",
-        avatar: "https://i.pravatar.cc/150?u=pivot"
-      }
+      testimonial: { quote: "", author: "", role: "", avatar: "" }
     },
+    fullscreenSlide("problem", "/Page (2).png"),
+    fullscreenSlide("value-prop", "/Page (3).png"),
+    fullscreenSlide("kpis", "/6.png"),
+    fullscreenSlide("competition", "/7.png"),
+    fullscreenSlide("team", "/9.png"),
+    fullscreenSlide("values", "/Page (5).png"),
+    fullscreenSlide("your-role", "/Page (4).png"),
+    fullscreenSlide("closing", "/Page (7).png"),
     {
-      id: "the-connection",
-      badge: "Le Résultat",
-      badgeIcon: "bolt",
-      title: "L'Automatisation par la Connexion",
-      subtitle: "En ce connectant avec chacun d'entre eux, on a remarqué qu'on pouvait automatisé la paie grâce à la connection avec les logiciels de paies. Par la suite, automatisé le pourboire, avec la connection POS, co piloter le restaurant en remarquant les quarts qui étaient problématique.",
-      layout: 'right',
+      id: "table-connected",
+      badge: "La Solution",
+      badgeIcon: "hub",
+      title: "Pivot est le pont qui rassemble tout le monde",
+      subtitle: "On a décidé de prendre le centre et de rassembler tout le monde. Pivot connecte la réservation, le POS, la paie et l'inventaire pour que tous les systèmes se parlent enfin.",
+      layout: 'left',
       accentColor: '#10b981',
-      features: [
-        { icon: "payments", title: "Paie Automatisée", description: "" },
-        { icon: "monetization_on", title: "Pourboires", description: "" },
-        { icon: "psychology", title: "Co-pilotage", description: "" }
-      ],
-      image: "https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&q=80&w=1200",
-      uiCards: [
-        { label: "PAIE", value: "Automatisée", type: 'stat', position: "top-10 -left-12" },
-        { label: "POURBOIRES", value: "POS Synchro", type: 'pos', position: "bottom-12 -right-10" }
-      ],
-      testimonial: {
-        quote: "Relier les systèmes nous a permis de nous concentrer sur nos clients.",
-        author: "Sarah Jenkins",
-        role: "Gestionnaire",
-        avatar: "https://i.pravatar.cc/150?u=sarah"
-      }
-    }
+      features: [],
+      image: "/5.png",
+      uiCards: [],
+      testimonial: { quote: "", author: "", role: "", avatar: "" }
+    },
+    fullscreenSlide("questions", "/Page (6).png"),
+  ],
+  fr: [
+    fullscreenSlide("cover", "/Cover 3.png"),
+    fullscreenSlide("story-intro", "/Page.png"),
+    {
+      id: "table-disconnected",
+      badge: "L'Observation",
+      badgeIcon: "restaurant",
+      title: "Tout a commencé autour de la table",
+      subtitle: "On a pris une place autour de la restaurant tech et là, on a vu qu'il y avait des gens autour de la table: plateforme de réservation, POS, Paie et inventaire. Mais personne ne se parlait.",
+      layout: 'left',
+      accentColor: '#0088FF',
+      features: [],
+      image: "/image.png",
+      uiCards: [],
+      testimonial: { quote: "", author: "", role: "", avatar: "" }
+    },
+    fullscreenSlide("problem", "/Page (2).png"),
+    fullscreenSlide("value-prop", "/Page (3).png"),
+    fullscreenSlide("kpis", "/6.png"),
+    fullscreenSlide("competition", "/7.png"),
+    fullscreenSlide("team", "/9.png"),
+    fullscreenSlide("values", "/Page (5).png"),
+    fullscreenSlide("your-role", "/Page (4).png"),
+    fullscreenSlide("closing", "/Page (7).png"),
+    {
+      id: "table-connected",
+      badge: "La Solution",
+      badgeIcon: "hub",
+      title: "Pivot est le pont qui rassemble tout le monde",
+      subtitle: "On a décidé de prendre le centre et de rassembler tout le monde. Pivot connecte la réservation, le POS, la paie et l'inventaire pour que tous les systèmes se parlent enfin.",
+      layout: 'left',
+      accentColor: '#10b981',
+      features: [],
+      image: "/5.png",
+      uiCards: [],
+      testimonial: { quote: "", author: "", role: "", avatar: "" }
+    },
+    fullscreenSlide("questions", "/Page (6).png"),
   ]
 };

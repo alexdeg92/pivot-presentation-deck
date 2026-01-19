@@ -10,7 +10,21 @@ interface SlideProps {
 
 const Slide: React.FC<SlideProps> = ({ slide, lang }) => {
   const isRightLayout = slide.layout === 'right';
-  
+  const isFullscreen = slide.layout === 'fullscreen';
+
+  // Fullscreen layout - just display the image
+  if (isFullscreen) {
+    return (
+      <div className="w-full h-full flex items-center justify-center">
+        <img
+          alt="Slide"
+          className="max-w-full max-h-full object-contain"
+          src={slide.image}
+        />
+      </div>
+    );
+  }
+
   return (
     <div className={`flex flex-col lg:flex-row gap-8 lg:gap-16 items-start lg:items-center w-full h-full max-h-[85vh] pt-6 lg:pt-0 ${isRightLayout ? 'lg:flex-row-reverse' : ''}`}>
       {/* Content Column */}
@@ -45,7 +59,7 @@ const Slide: React.FC<SlideProps> = ({ slide, lang }) => {
         <div className="space-y-4 lg:space-y-6">
           {slide.features.map((feature, index) => (
             <div key={index} className="flex items-center space-x-6">
-              <div 
+              <div
                 className="w-12 h-12 lg:w-16 lg:h-16 rounded-2xl flex items-center justify-center shrink-0 shadow-lg"
                 style={{ backgroundColor: `${slide.accentColor}08`, color: slide.accentColor }}
               >
@@ -61,26 +75,15 @@ const Slide: React.FC<SlideProps> = ({ slide, lang }) => {
 
       {/* Visual Column */}
       <div className="flex-1 relative w-full h-full flex items-center justify-center min-h-[300px] lg:min-h-0">
-        <div 
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full rounded-full opacity-[0.05] blur-[100px]"
-          style={{ backgroundColor: slide.accentColor }}
-        ></div>
-
         <div className="relative z-10 w-full max-w-[600px] xl:max-w-[700px]">
-          <div className="relative rounded-[2.5rem] lg:rounded-[3.5rem] overflow-hidden shadow-2xl border-[8px] lg:border-[12px] border-white aspect-[4/3] bg-gray-50 flex items-center justify-center">
-            <img 
-              alt="Slide Graphic" 
-              className="w-full h-full object-cover" 
-              src={slide.image}
-              onError={(e) => {
-                // If the private Slack URL fails (auth issue), use the one from the visual reference provided in the last prompt
-                (e.target as HTMLImageElement).src = "https://lh3.googleusercontent.com/d/1yWlY9vQYyYq_e_c-Yh_S6G_n_v7_o_Y_=w1000";
-              }}
-            />
-          </div>
+          <img
+            alt="Slide Graphic"
+            className="w-full h-auto object-contain rounded-2xl"
+            src={slide.image}
+          />
 
           {slide.uiCards.map((card, idx) => (
-            <div 
+            <div
               key={idx}
               className={`absolute ${card.position} z-30 bg-white/95 backdrop-blur-xl px-4 py-3 lg:px-6 lg:py-4 rounded-2xl lg:rounded-3xl shadow-xl border border-white/50 w-44 lg:w-56 transform hover:scale-105 transition-transform`}
             >

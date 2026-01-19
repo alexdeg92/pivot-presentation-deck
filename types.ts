@@ -7,7 +7,7 @@ export interface SlideData {
   subtitle: string;
   features: Feature[];
   image: string;
-  layout: 'left' | 'right' | 'center';
+  layout: 'left' | 'right' | 'center' | 'fullscreen';
   accentColor: string;
   uiCards: UICard[];
   testimonial: {
