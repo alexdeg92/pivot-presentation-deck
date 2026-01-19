@@ -53,7 +53,6 @@ export const SLIDES: Record<'en' | 'fr', SlideData[]> = {
     fullscreenSlide("kpis", "/6.png"),
     fullscreenSlide("competition", "/7.png"),
     fullscreenSlide("team", "/9.png"),
-    fullscreenSlide("values", "/Page (5).png"),
     fullscreenSlide("your-role", "/Page (4).png"),
     fullscreenSlide("closing", "/Page (7).png"),
     {
@@ -92,7 +91,6 @@ export const SLIDES: Record<'en' | 'fr', SlideData[]> = {
     fullscreenSlide("kpis", "/6.png"),
     fullscreenSlide("competition", "/7.png"),
     fullscreenSlide("team", "/9.png"),
-    fullscreenSlide("values", "/Page (5).png"),
     fullscreenSlide("your-role", "/Page (4).png"),
     fullscreenSlide("closing", "/Page (7).png"),
     {
