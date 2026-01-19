@@ -67,8 +67,19 @@
 <script type="module" src="/index.tsx"></script>
 <script>
   if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('/sw.js');
+    window.addEventListener('load', async () => {
+      // Unregister old service workers and clear caches
+      const registrations = await navigator.serviceWorker.getRegistrations();
+      for (const registration of registrations) {
+        await registration.unregister();
+      }
+      
+      // Clear all caches
+      const cacheNames = await caches.keys();
+      await Promise.all(cacheNames.map(name => caches.delete(name)));
+      
+      // Register fresh service worker
+      navigator.serviceWorker.register('/sw.js?v=' + Date.now());
     });
   }
 </script>

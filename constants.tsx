@@ -35,6 +35,7 @@ export const SLIDES: Record<'en' | 'fr', SlideData[]> = {
   en: [
     fullscreenSlide("cover", "/Cover 3.png"),
     fullscreenSlide("story-intro", "/Page.png"),
+    fullscreenSlide("problem", "/Page (2).png"),
     {
       id: "table-disconnected",
       badge: "L'Observation",
@@ -48,7 +49,6 @@ export const SLIDES: Record<'en' | 'fr', SlideData[]> = {
       uiCards: [],
       testimonial: { quote: "", author: "", role: "", avatar: "" }
     },
-    fullscreenSlide("problem", "/Page (2).png"),
     fullscreenSlide("value-prop", "/Page (3).png"),
     fullscreenSlide("kpis", "/6.png"),
     fullscreenSlide("competition", "/7.png"),
@@ -74,6 +74,7 @@ export const SLIDES: Record<'en' | 'fr', SlideData[]> = {
   fr: [
     fullscreenSlide("cover", "/Cover 3.png"),
     fullscreenSlide("story-intro", "/Page.png"),
+    fullscreenSlide("problem", "/Page (2).png"),
     {
       id: "table-disconnected",
       badge: "L'Observation",
@@ -87,7 +88,6 @@ export const SLIDES: Record<'en' | 'fr', SlideData[]> = {
       uiCards: [],
       testimonial: { quote: "", author: "", role: "", avatar: "" }
     },
-    fullscreenSlide("problem", "/Page (2).png"),
     fullscreenSlide("value-prop", "/Page (3).png"),
     fullscreenSlide("kpis", "/6.png"),
     fullscreenSlide("competition", "/7.png"),
