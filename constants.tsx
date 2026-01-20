@@ -79,8 +79,8 @@ export const SLIDES: Record<'en' | 'fr', SlideData[]> = {
     fullscreenSlide("competition", "/7.png"),
     fullscreenSlide("team", "/9.png"),
     fullscreenSlide("your-role", "/Page (4).png"),
-    fullscreenSlide("closing", "/Page (7).png"),
     fullscreenSlide("questions", "/Page (6).png"),
+    fullscreenSlide("closing", "/Page (7).png"),
   ],
   fr: [
     fullscreenSlide("cover", "/Cover 3.png"),
@@ -129,7 +129,7 @@ export const SLIDES: Record<'en' | 'fr', SlideData[]> = {
     fullscreenSlide("competition", "/7.png"),
     fullscreenSlide("team", "/9.png"),
     fullscreenSlide("your-role", "/Page (4).png"),
-    fullscreenSlide("closing", "/Page (7).png"),
     fullscreenSlide("questions", "/Page (6).png"),
+    fullscreenSlide("closing", "/Page (7).png"),
   ]
 };
