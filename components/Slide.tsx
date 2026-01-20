@@ -6,11 +6,42 @@ import { Language } from '../translations';
 interface SlideProps {
   slide: SlideData;
   lang: Language;
+  showManagerText?: boolean;
 }
 
-const Slide: React.FC<SlideProps> = ({ slide, lang }) => {
+const Slide: React.FC<SlideProps> = ({ slide, lang, showManagerText = false }) => {
   const isRightLayout = slide.layout === 'right';
   const isFullscreen = slide.layout === 'fullscreen';
+  const isManager = slide.layout === 'manager';
+
+  // Manager layout - image shrinks to left, text appears on right (triggered by click)
+  if (isManager) {
+    return (
+      <div className="absolute inset-0 w-full h-full overflow-hidden bg-white pointer-events-none flex">
+        {/* Image container - starts full width, shrinks to 65% on click */}
+        <div 
+          className={`h-full transition-all duration-1000 ease-out overflow-hidden ${showManagerText ? 'w-[65%]' : 'w-full'}`}
+        >
+          <img
+            alt="Slide"
+            className="w-full h-full object-cover"
+            src={slide.image}
+          />
+        </div>
+        
+        {/* Text container - slides in from right (35%) */}
+        <div 
+          className={`h-full flex items-center justify-center transition-all duration-1000 ease-out ${showManagerText ? 'w-[35%] opacity-100' : 'w-0 opacity-0'}`}
+        >
+          <div className="px-8 lg:px-16 max-w-xl">
+            <h2 className="text-4xl lg:text-6xl font-black text-gray-900 mb-6 leading-tight">
+              <span className="text-[#0088FF]">Pivot</span> Copilote le restaurant comme un gestionnaire
+            </h2>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   // Fullscreen layout - display the image to fill viewport without cropping
   if (isFullscreen) {

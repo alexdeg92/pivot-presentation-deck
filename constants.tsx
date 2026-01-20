@@ -49,12 +49,6 @@ export const SLIDES: Record<'en' | 'fr', SlideData[]> = {
       uiCards: [],
       testimonial: { quote: "", author: "", role: "", avatar: "" }
     },
-    fullscreenSlide("value-prop", "/Page (3).png"),
-    fullscreenSlide("kpis", "/6.png"),
-    fullscreenSlide("competition", "/7.png"),
-    fullscreenSlide("team", "/9.png"),
-    fullscreenSlide("your-role", "/Page (4).png"),
-    fullscreenSlide("closing", "/Page (7).png"),
     {
       id: "table-connected",
       badge: "La Solution",
@@ -68,6 +62,24 @@ export const SLIDES: Record<'en' | 'fr', SlideData[]> = {
       uiCards: [],
       testimonial: { quote: "", author: "", role: "", avatar: "" }
     },
+    {
+      id: "manager",
+      badge: "",
+      badgeIcon: "",
+      title: "",
+      subtitle: "",
+      layout: 'manager',
+      accentColor: '#0088FF',
+      features: [],
+      image: "/manager.png",
+      uiCards: [],
+      testimonial: { quote: "", author: "", role: "", avatar: "" }
+    },
+    fullscreenSlide("kpis", "/6.png"),
+    fullscreenSlide("competition", "/7.png"),
+    fullscreenSlide("team", "/9.png"),
+    fullscreenSlide("your-role", "/Page (4).png"),
+    fullscreenSlide("closing", "/Page (7).png"),
     fullscreenSlide("questions", "/Page (6).png"),
   ],
   fr: [
@@ -87,12 +99,6 @@ export const SLIDES: Record<'en' | 'fr', SlideData[]> = {
       uiCards: [],
       testimonial: { quote: "", author: "", role: "", avatar: "" }
     },
-    fullscreenSlide("value-prop", "/Page (3).png"),
-    fullscreenSlide("kpis", "/6.png"),
-    fullscreenSlide("competition", "/7.png"),
-    fullscreenSlide("team", "/9.png"),
-    fullscreenSlide("your-role", "/Page (4).png"),
-    fullscreenSlide("closing", "/Page (7).png"),
     {
       id: "table-connected",
       badge: "La Solution",
@@ -106,6 +112,24 @@ export const SLIDES: Record<'en' | 'fr', SlideData[]> = {
       uiCards: [],
       testimonial: { quote: "", author: "", role: "", avatar: "" }
     },
+    {
+      id: "manager",
+      badge: "",
+      badgeIcon: "",
+      title: "",
+      subtitle: "",
+      layout: 'manager',
+      accentColor: '#0088FF',
+      features: [],
+      image: "/manager.png",
+      uiCards: [],
+      testimonial: { quote: "", author: "", role: "", avatar: "" }
+    },
+    fullscreenSlide("kpis", "/6.png"),
+    fullscreenSlide("competition", "/7.png"),
+    fullscreenSlide("team", "/9.png"),
+    fullscreenSlide("your-role", "/Page (4).png"),
+    fullscreenSlide("closing", "/Page (7).png"),
     fullscreenSlide("questions", "/Page (6).png"),
   ]
 };
