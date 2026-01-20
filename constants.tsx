@@ -71,7 +71,7 @@ export const SLIDES: Record<'en' | 'fr', SlideData[]> = {
       layout: 'manager',
       accentColor: '#0088FF',
       features: [],
-      image: "/manager.png",
+      image: "/manager2.png",
       uiCards: [],
       testimonial: { quote: "", author: "", role: "", avatar: "" }
     },
@@ -121,7 +121,7 @@ export const SLIDES: Record<'en' | 'fr', SlideData[]> = {
       layout: 'manager',
       accentColor: '#0088FF',
       features: [],
-      image: "/manager.png",
+      image: "/manager2.png",
       uiCards: [],
       testimonial: { quote: "", author: "", role: "", avatar: "" }
     },
