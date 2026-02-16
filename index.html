@@ -495,6 +495,9 @@
 <body>
     <div class="presentation-container">
         <div class="progress-bar" id="progressBar"></div>
+        <button id="fullscreenBtn" onclick="if(!document.fullscreenElement){document.documentElement.requestFullscreen()}else{document.exitFullscreen()}" style="position:fixed;bottom:20px;right:20px;z-index:1000;background:rgba(0,0,0,0.15);border:none;border-radius:8px;padding:8px 12px;cursor:pointer;opacity:0.5;transition:opacity 0.2s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.5'">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
+        </button>
         
         <div class="slides-wrapper" id="slidesWrapper">
             <!-- Slide 1: Hero -->
@@ -867,6 +870,14 @@
             if (e.key === 'ArrowRight' || e.key === ' ') {
                 e.preventDefault();
                 nextSlide();
+            } else if (e.key === 'f' || e.key === 'F') {
+                if (!document.fullscreenElement) {
+                    document.documentElement.requestFullscreen();
+                } else {
+                    document.exitFullscreen();
+                }
+            } else if (e.key === 'Escape' && document.fullscreenElement) {
+                document.exitFullscreen();
             } else if (e.key === 'ArrowLeft') {
                 e.preventDefault();
                 previousSlide();
