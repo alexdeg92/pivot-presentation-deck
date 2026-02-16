@@ -1,87 +1,933 @@
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Presentation Pivot</title>
-    <meta name="description" content="Pivot - Restaurant Tech Presentation">
-    <meta name="theme-color" content="#0088FF">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="Pivot">
-    <link rel="manifest" href="/manifest.json">
-    <link rel="apple-touch-icon" href="/icons/icon-192.svg">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            colors: {
-              primary: "#0088FF",
-              "primary-hover": "#0066CC",
-            },
-            fontFamily: {
-              sans: ["Inter", "sans-serif"],
-            },
-          },
-        },
-      };
-    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pivot - Présentation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-      body, html {
-        margin: 0;
-        padding: 0;
-        height: 100%;
-        width: 100%;
-        overflow: hidden;
-        position: fixed;
-      }
-      #root {
-        height: 100%;
-        width: 100%;
-      }
-      .slide-active {
-        animation: fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-      }
-      @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(10px); }
-        to { opacity: 1; transform: translateY(0); }
-      }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #ffffff;
+            overflow: hidden;
+            height: 100vh;
+        }
+
+        .presentation-container {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #00ACFE, #0F7DFF);
+            z-index: 1000;
+            transition: width 0.5s ease;
+        }
+
+        .slides-wrapper {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            transition: transform 0.8s cubic-bezier(0.4, 0.0, 0.2, 1);
+        }
+
+        .slide {
+            min-width: 100vw;
+            height: 100vh;
+            padding: 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: white;
+            position: relative;
+        }
+
+        .slide.gradient-bg {
+            background: linear-gradient(135deg, #00ACFE 0%, #0F7DFF 100%);
+            background-size: 200% 200%;
+            animation: gradientShift 8s ease-in-out infinite;
+            color: white;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        /* Animation keyframes */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                box-shadow: 0 8px 32px rgba(15, 125, 255, 0.3);
+            }
+            50% {
+                transform: scale(1.02);
+                box-shadow: 0 12px 40px rgba(15, 125, 255, 0.4);
+            }
+        }
+
+        /* Default hidden state */
+        .slide h1,
+        .slide h2,
+        .slide .subtitle,
+        .slide .card,
+        .slide .stat,
+        .slide .checkmark,
+        .slide .client-pill,
+        .slide .cta-button {
+            opacity: 0;
+        }
+
+        /* Animation classes when slide is active */
+        .slide.active h1 {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .slide.active h2 {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .slide.active .subtitle {
+            animation: fadeInUp 0.6s ease 0.2s forwards;
+        }
+
+        .slide.active .card:nth-child(1) { animation: fadeInUp 0.6s ease 0.1s forwards; }
+        .slide.active .card:nth-child(2) { animation: fadeInUp 0.6s ease 0.2s forwards; }
+        .slide.active .card:nth-child(3) { animation: fadeInUp 0.6s ease 0.3s forwards; }
+        .slide.active .card:nth-child(4) { animation: fadeInUp 0.6s ease 0.4s forwards; }
+        .slide.active .card:nth-child(5) { animation: fadeInUp 0.6s ease 0.5s forwards; }
+        .slide.active .card:nth-child(6) { animation: fadeInUp 0.6s ease 0.6s forwards; }
+
+        .slide.active .stat:nth-child(1) { animation: fadeInUp 0.6s ease 0.1s forwards; }
+        .slide.active .stat:nth-child(2) { animation: fadeInUp 0.6s ease 0.2s forwards; }
+        .slide.active .stat:nth-child(3) { animation: fadeInUp 0.6s ease 0.3s forwards; }
+
+        .slide.active .checkmark:nth-child(1) { animation: scaleIn 0.3s ease 0.1s forwards; }
+        .slide.active .checkmark:nth-child(2) { animation: scaleIn 0.3s ease 0.2s forwards; }
+        .slide.active .checkmark:nth-child(3) { animation: scaleIn 0.3s ease 0.3s forwards; }
+        .slide.active .checkmark:nth-child(4) { animation: scaleIn 0.3s ease 0.4s forwards; }
+        .slide.active .checkmark:nth-child(5) { animation: scaleIn 0.3s ease 0.5s forwards; }
+
+        .slide.active .client-pill {
+            animation: fadeIn 0.4s ease forwards;
+        }
+
+        .slide.active .client-pill:nth-child(1) { animation-delay: 0.05s; }
+        .slide.active .client-pill:nth-child(2) { animation-delay: 0.1s; }
+        .slide.active .client-pill:nth-child(3) { animation-delay: 0.15s; }
+        .slide.active .client-pill:nth-child(4) { animation-delay: 0.2s; }
+        .slide.active .client-pill:nth-child(5) { animation-delay: 0.25s; }
+        .slide.active .client-pill:nth-child(6) { animation-delay: 0.3s; }
+        .slide.active .client-pill:nth-child(7) { animation-delay: 0.35s; }
+        .slide.active .client-pill:nth-child(8) { animation-delay: 0.4s; }
+        .slide.active .client-pill:nth-child(9) { animation-delay: 0.45s; }
+        .slide.active .client-pill:nth-child(10) { animation-delay: 0.5s; }
+
+        .slide.active .cta-button {
+            animation: fadeInUp 0.6s ease 0.3s forwards, pulse 2s ease-in-out 1s infinite;
+        }
+
+        .logo {
+            width: 120px;
+            height: auto;
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 30px;
+            line-height: 1.2;
+            color: #1a1a1a;
+        }
+
+        h2 {
+            font-size: 2.8rem;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 40px;
+            color: #1a1a1a;
+        }
+
+        .subtitle {
+            font-size: 1.4rem;
+            text-align: center;
+            margin-bottom: 50px;
+            color: #6b7280;
+            max-width: 800px;
+            line-height: 1.6;
+        }
+
+        .gradient-bg h1,
+        .gradient-bg h2,
+        .gradient-bg .subtitle {
+            color: white;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 60px;
+            margin-bottom: 50px;
+            width: 100%;
+            max-width: 900px;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: #0F7DFF;
+            margin-bottom: 10px;
+            counter-reset: stat-counter;
+        }
+
+        .stat-label {
+            font-size: 1.2rem;
+            color: #6b7280;
+            font-weight: 500;
+        }
+
+        .cards-grid {
+            display: grid;
+            gap: 30px;
+            width: 100%;
+            max-width: 1000px;
+        }
+
+        .cards-grid.two-cols {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .cards-grid.three-cols {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        .cards-grid.four-cols {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px 30px;
+            text-align: center;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 20px;
+            fill: #0F7DFF;
+        }
+
+        .card-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 15px;
+        }
+
+        .card-description {
+            font-size: 1rem;
+            color: #6b7280;
+            line-height: 1.5;
+        }
+
+        .checkmarks {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            max-width: 600px;
+            width: 100%;
+        }
+
+        .checkmark {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+        }
+
+        .checkmark-icon {
+            width: 24px;
+            height: 24px;
+            fill: #10B981;
+            flex-shrink: 0;
+        }
+
+        .checkmark-text {
+            font-size: 1.2rem;
+            font-weight: 500;
+            color: #1a1a1a;
+        }
+
+        .clients-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 20px;
+            width: 100%;
+            max-width: 800px;
+        }
+
+        .client-pill {
+            background: white;
+            border-radius: 50px;
+            padding: 20px 25px;
+            text-align: center;
+            font-weight: 600;
+            color: #1a1a1a;
+            font-size: 1.1rem;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 120px;
+        }
+
+        .client-logo {
+            width: 60px;
+            height: 40px;
+            object-fit: contain;
+            margin-bottom: 8px;
+        }
+
+        .client-pill:hover {
+            transform: scale(1.05);
+        }
+
+        .frosted-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            max-width: 900px;
+            width: 100%;
+        }
+
+        .frosted-card {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .frosted-card-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 15px;
+        }
+
+        .frosted-card-text {
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.5;
+        }
+
+        .cta-button {
+            background: linear-gradient(135deg, #00ACFE, #0F7DFF);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 18px 40px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 30px;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+        }
+
+        .contact-info {
+            margin-top: 40px;
+            text-align: center;
+        }
+
+        .contact-info p {
+            font-size: 1.1rem;
+            color: #6b7280;
+            margin: 5px 0;
+        }
+
+        .navigation {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            display: flex;
+            gap: 10px;
+            z-index: 100;
+        }
+
+        .nav-button {
+            background: rgba(15, 125, 255, 0.9);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s ease;
+        }
+
+        .nav-button:hover {
+            background: rgba(15, 125, 255, 1);
+        }
+
+        .nav-button:disabled {
+            background: rgba(107, 114, 128, 0.5);
+            cursor: not-allowed;
+        }
+
+        /* Icons SVG */
+        .icon {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .slide {
+                padding: 30px 20px;
+            }
+
+            h1 { font-size: 2.5rem; }
+            h2 { font-size: 2rem; }
+            .subtitle { font-size: 1.1rem; }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .cards-grid.two-cols,
+            .cards-grid.three-cols {
+                grid-template-columns: 1fr;
+            }
+
+            .clients-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .frosted-cards {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Counter animation for stats */
+        @keyframes countUp {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .slide.active .stat-number {
+            animation: countUp 1.5s ease forwards;
+        }
     </style>
-<script type="importmap">
-{
-  "imports": {
-    "react/": "https://esm.sh/react@^19.2.3/",
-    "react": "https://esm.sh/react@^19.2.3",
-    "react-dom/": "https://esm.sh/react-dom@^19.2.3/"
-  }
-}
-</script>
-<link rel="stylesheet" href="/index.css">
 </head>
-<body class="bg-white font-sans text-gray-900">
-    <div id="root"></div>
-<script type="module" src="/index.tsx"></script>
-<script>
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', async () => {
-      // Unregister old service workers and clear caches
-      const registrations = await navigator.serviceWorker.getRegistrations();
-      for (const registration of registrations) {
-        await registration.unregister();
-      }
-      
-      // Clear all caches
-      const cacheNames = await caches.keys();
-      await Promise.all(cacheNames.map(name => caches.delete(name)));
-      
-      // Register fresh service worker
-      navigator.serviceWorker.register('/sw.js?v=' + Date.now());
-    });
-  }
-</script>
+<body>
+    <div class="presentation-container">
+        <div class="progress-bar" id="progressBar"></div>
+        <button id="fullscreenBtn" onclick="if(!document.fullscreenElement){document.documentElement.requestFullscreen()}else{document.exitFullscreen()}" style="position:fixed;bottom:20px;right:20px;z-index:1000;background:rgba(0,0,0,0.15);border:none;border-radius:8px;padding:8px 12px;cursor:pointer;opacity:0.5;transition:opacity 0.2s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.5'">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
+        </button>
+        
+        <div class="slides-wrapper" id="slidesWrapper">
+            <!-- Slide 1: Hero -->
+            <div class="slide active">
+                <img src="assets/pivot-logo.png" class="logo" alt="Pivot">
+                <h1>La plateforme centrale pour les restaurants d'aujourd'hui</h1>
+                <p class="subtitle">Votre copilote IA pour optimiser les horaires, simplifier la paie et centraliser toutes vos opérations</p>
+                <a href="https://pivotapp.ca" target="_blank" class="cta-button">Découvrir Pivot</a>
+            </div>
+
+            <!-- Slide 2: About -->
+            <div class="slide">
+                <img src="assets/pivot-logo.png" style="position:absolute;top:24px;left:32px;width:36px;height:36px;border-radius:8px;z-index:10;" alt="Pivot">
+                <h2>Pivot en chiffres</h2>
+                <div class="stats-grid">
+                    <div class="stat">
+                        <div class="stat-number" data-target="500">0</div>
+                        <div class="stat-label">Restaurants+</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number" data-target="15000">0</div>
+                        <div class="stat-label">Employés</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number" data-target="99.9">0</div>
+                        <div class="stat-label">% Uptime</div>
+                    </div>
+                </div>
+                <p class="subtitle">La solution de confiance qui transforme la gestion de votre équipe avec l'intelligence artificielle</p>
+            </div>
+
+            <!-- Slide 3: Problem -->
+            <div class="slide">
+                <img src="assets/pivot-logo.png" style="position:absolute;top:24px;left:32px;width:36px;height:36px;border-radius:8px;z-index:10;" alt="Pivot">
+                <h2>Les défis de la gestion restaurant</h2>
+                <div class="cards-grid four-cols">
+                    <div class="card">
+                        <svg class="card-icon" viewBox="0 0 24 24">
+                            <path d="M12 2C13.1 2 14 2.9 14 4C14 5.1 13.1 6 12 6C10.9 6 10 5.1 10 4C10 2.9 10.9 2 12 2ZM21 9V7L15 5.5V2H9V5.5L3 7V9H21ZM21 19H3V10H21V19Z"/>
+                        </svg>
+                        <h3 class="card-title">Horaires manuels</h3>
+                        <p class="card-description">Création d'horaires complexe et chronophage</p>
+                    </div>
+                    <div class="card">
+                        <svg class="card-icon" viewBox="0 0 24 24">
+                            <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM13 17H11V15H13V17ZM13 13H11V7H13V13Z"/>
+                        </svg>
+                        <h3 class="card-title">Paie complexe</h3>
+                        <p class="card-description">Calculs manuels sources d'erreurs coûteuses</p>
+                    </div>
+                    <div class="card">
+                        <svg class="card-icon" viewBox="0 0 24 24">
+                            <path d="M20 4H4C2.9 4 2.01 4.9 2.01 6L2 18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V6C22 4.9 21.1 4 20 4ZM8 6V18H6V6H8ZM20 18H10V6H20V18Z"/>
+                        </svg>
+                        <h3 class="card-title">Communication éclatée</h3>
+                        <p class="card-description">Messages dispersés sur multiples plateformes</p>
+                    </div>
+                    <div class="card">
+                        <svg class="card-icon" viewBox="0 0 24 24">
+                            <path d="M12 2L2 7L12 12L22 7L12 2ZM2 17L12 22L22 17M2 12L12 17L22 12"/>
+                        </svg>
+                        <h3 class="card-title">Outils déconnectés</h3>
+                        <p class="card-description">Systèmes isolés sans vue d'ensemble</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 4: Solution -->
+            <div class="slide">
+                <img src="assets/pivot-logo.png" style="position:absolute;top:24px;left:32px;width:36px;height:36px;border-radius:8px;z-index:10;" alt="Pivot">
+                <h2>La solution Pivot</h2>
+                <div class="checkmarks">
+                    <div class="checkmark">
+                        <svg class="checkmark-icon" viewBox="0 0 24 24">
+                            <path d="M9 16.2L4.8 12L3.4 13.4L9 19L21 7L19.6 5.6L9 16.2Z"/>
+                        </svg>
+                        <span class="checkmark-text">Horaires IA optimisés selon demande et budget</span>
+                    </div>
+                    <div class="checkmark">
+                        <svg class="checkmark-icon" viewBox="0 0 24 24">
+                            <path d="M9 16.2L4.8 12L3.4 13.4L9 19L21 7L19.6 5.6L9 16.2Z"/>
+                        </svg>
+                        <span class="checkmark-text">Paie automatique 1-clic sans erreur</span>
+                    </div>
+                    <div class="checkmark">
+                        <svg class="checkmark-icon" viewBox="0 0 24 24">
+                            <path d="M9 16.2L4.8 12L3.4 13.4L9 19L21 7L19.6 5.6L9 16.2Z"/>
+                        </svg>
+                        <span class="checkmark-text">Communication centralisée équipe unifiée</span>
+                    </div>
+                    <div class="checkmark">
+                        <svg class="checkmark-icon" viewBox="0 0 24 24">
+                            <path d="M9 16.2L4.8 12L3.4 13.4L9 19L21 7L19.6 5.6L9 16.2Z"/>
+                        </svg>
+                        <span class="checkmark-text">Intégrations POS natives temps réel</span>
+                    </div>
+                    <div class="checkmark">
+                        <svg class="checkmark-icon" viewBox="0 0 24 24">
+                            <path d="M9 16.2L4.8 12L3.4 13.4L9 19L21 7L19.6 5.6L9 16.2Z"/>
+                        </svg>
+                        <span class="checkmark-text">Dashboard analytique vue 360°</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 5: Features -->
+            <div class="slide">
+                <img src="assets/pivot-logo.png" style="position:absolute;top:24px;left:32px;width:36px;height:36px;border-radius:8px;z-index:10;" alt="Pivot">
+                <h2>Fonctionnalités clés</h2>
+                <div class="cards-grid three-cols">
+                    <div class="card">
+                        <svg class="card-icon" viewBox="0 0 24 24">
+                            <path d="M11.99 2C6.47 2 2 6.48 2 12S6.47 22 11.99 22C17.52 22 22 17.52 22 12S17.52 2 11.99 2ZM12 20C7.58 20 4 16.42 4 12S7.58 4 12 4S20 7.58 20 12S16.42 20 12 20ZM12.5 7H11V13L16.25 16.15L17 14.92L12.5 12.25V7Z"/>
+                        </svg>
+                        <h3 class="card-title">Horaire</h3>
+                        <p class="card-description">IA prédictive pour horaires optimaux</p>
+                    </div>
+                    <div class="card">
+                        <svg class="card-icon" viewBox="0 0 24 24">
+                            <path d="M12 2C13.1 2 14 2.9 14 4C14 5.1 13.1 6 12 6C10.9 6 10 5.1 10 4C10 2.9 10.9 2 12 2ZM21 9V7L15 5.5V4H9V5.5L3 7V9H21ZM21 10H3V19H21V10Z"/>
+                        </svg>
+                        <h3 class="card-title">Paie</h3>
+                        <p class="card-description">Automatisation complète sans erreur</p>
+                    </div>
+                    <div class="card">
+                        <svg class="card-icon" viewBox="0 0 24 24">
+                            <path d="M3 13H11V3H3V13ZM3 21H11V15H3V21ZM13 21H21V11H13V21ZM13 3V9H21V3H13Z"/>
+                        </svg>
+                        <h3 class="card-title">Dashboard</h3>
+                        <p class="card-description">Analytics temps réel performance</p>
+                    </div>
+                    <div class="card">
+                        <svg class="card-icon" viewBox="0 0 24 24">
+                            <path d="M20 2H4C2.9 2 2.01 2.9 2.01 4L2 22L6 18H20C21.1 18 22 17.1 22 16V4C22 2.9 21.1 2 20 2ZM18 14H6V12H18V14ZM18 11H6V9H18V11ZM18 8H6V6H18V8Z"/>
+                        </svg>
+                        <h3 class="card-title">Messagerie</h3>
+                        <p class="card-description">Communication équipe centralisée</p>
+                    </div>
+                    <div class="card">
+                        <svg class="card-icon" viewBox="0 0 24 24">
+                            <path d="M19 3H5C3.9 3 3 3.9 3 5V19C3 20.1 3.9 21 5 21H19C20.1 21 21 20.1 21 19V5C21 3.9 20.1 3 19 3ZM19 19H5V5H19V19ZM7 10H9V12H7V10ZM11 10H13V12H11V10ZM15 10H17V12H15V10Z"/>
+                        </svg>
+                        <h3 class="card-title">Demandes</h3>
+                        <p class="card-description">Gestion congés vacances RH</p>
+                    </div>
+                    <div class="card">
+                        <svg class="card-icon" viewBox="0 0 24 24">
+                            <path d="M16 6L18.29 8.29L13.41 13.17L9.41 9.17L2 16.59L3.41 18L9.41 12L13.41 16L20.71 8.71L23 11V6H16Z"/>
+                        </svg>
+                        <h3 class="card-title">Contrôle coûts</h3>
+                        <p class="card-description">Optimisation budget main-d'œuvre</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 6: Clients -->
+            <div class="slide">
+                <img src="assets/pivot-logo.png" style="position:absolute;top:24px;left:32px;width:36px;height:36px;border-radius:8px;z-index:10;" alt="Pivot">
+                <h2>Ils nous font confiance</h2>
+                <div class="clients-grid">
+                    <div class="client-pill">
+                        <img src="assets/logos/zibo.png" alt="ZIBO! Logo" class="client-logo">
+                        ZIBO!
+                    </div>
+                    <div class="client-pill">
+                        <img src="assets/logos/mikes.png" alt="Mikes Logo" class="client-logo">
+                        Mikes
+                    </div>
+                    <div class="client-pill">
+                        <img src="assets/logos/st-hubert.png" alt="St-Hubert Logo" class="client-logo">
+                        St-Hubert
+                    </div>
+                    <div class="client-pill">
+                        <img src="assets/logos/baton-rouge.png" alt="Bâton Rouge Logo" class="client-logo">
+                        Bâton Rouge
+                    </div>
+                    <div class="client-pill">
+                        <img src="assets/logos/randolph.png" alt="Randolph Logo" class="client-logo">
+                        Randolph
+                    </div>
+                    <div class="client-pill">
+                        <img src="assets/logos/pacini.png" alt="Pacini Logo" class="client-logo">
+                        Pacini
+                    </div>
+                    <div class="client-pill">
+                        <img src="assets/logos/la-cage.png" alt="La Cage Logo" class="client-logo">
+                        La Cage
+                    </div>
+                    <div class="client-pill">
+                        <img src="assets/logos/scores.png" alt="Scores Logo" class="client-logo">
+                        Scores
+                    </div>
+                    <div class="client-pill">
+                        <img src="assets/logos/industria.png" alt="Industria Logo" class="client-logo">
+                        Industria
+                    </div>
+                    <div class="client-pill">
+                        <img src="assets/logos/belle-boeuf.png" alt="Belle & La Boeuf Logo" class="client-logo">
+                        Belle & La Boeuf
+                    </div>
+                </div>
+                <p class="subtitle">Des marques emblématiques qui ont fait le choix de l'innovation</p>
+            </div>
+
+            <!-- Slide 7: Technology -->
+            <div class="slide">
+                <img src="assets/pivot-logo.png" style="position:absolute;top:24px;left:32px;width:36px;height:36px;border-radius:8px;z-index:10;" alt="Pivot">
+                <h2>Notre technologie</h2>
+                <div class="cards-grid four-cols">
+                    <div class="card">
+                        <svg class="card-icon" viewBox="0 0 24 24">
+                            <path d="M19.35 10.04C18.67 6.59 15.64 4 12 4C9.11 4 6.6 5.64 5.35 8.04C2.34 8.36 0 10.91 0 14C0 17.31 2.69 20 6 20H19C21.76 20 24 17.76 24 15C24 12.36 21.95 10.22 19.35 10.04Z"/>
+                        </svg>
+                        <h3 class="card-title">Cloud GCP</h3>
+                        <p class="card-description">Infrastructure sécurisée haute disponibilité</p>
+                    </div>
+                    <div class="card">
+                        <svg class="card-icon" viewBox="0 0 24 24">
+                            <path d="M12 2L2 7L12 12L22 7L12 2ZM2 17L12 22L22 17M2 12L12 17L22 12"/>
+                        </svg>
+                        <h3 class="card-title">IA/ML</h3>
+                        <p class="card-description">Algorithmes prédictifs optimisation continue</p>
+                    </div>
+                    <div class="card">
+                        <svg class="card-icon" viewBox="0 0 24 24">
+                            <path d="M12 1L3 5V11C3 16.55 6.84 21.74 12 23C17.16 21.74 21 16.55 21 11V5L12 1ZM10 17L6 13L7.41 11.59L10 14.17L16.59 7.58L18 9L10 17Z"/>
+                        </svg>
+                        <h3 class="card-title">Sécurité</h3>
+                        <p class="card-description">Chiffrement bancaire conformité SOC2</p>
+                    </div>
+                    <div class="card">
+                        <svg class="card-icon" viewBox="0 0 24 24">
+                            <path d="M17 19H7V5H17M17 1H7C5.89 1 5 1.89 5 3V21C5 22.1 5.89 23 7 23H17C18.1 23 19 22.1 19 21V3C19 1.89 18.1 1 17 1Z"/>
+                        </svg>
+                        <h3 class="card-title">Mobile React Native</h3>
+                        <p class="card-description">Apps natives iOS Android performantes</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 8: Why Pivot -->
+            <div class="slide gradient-bg">
+                <img src="assets/pivot-logo.png" style="position:absolute;top:24px;left:32px;width:36px;height:36px;border-radius:8px;z-index:10;" alt="Pivot">
+                <h2>Pourquoi choisir Pivot?</h2>
+                <div class="frosted-cards">
+                    <div class="frosted-card">
+                        <h3 class="frosted-card-title">IA native</h3>
+                        <p class="frosted-card-text">Conçu dès l'origine avec l'intelligence artificielle au cœur</p>
+                    </div>
+                    <div class="frosted-card">
+                        <h3 class="frosted-card-title">Tout-en-un</h3>
+                        <p class="frosted-card-text">Une seule plateforme pour tous vos besoins de gestion RH</p>
+                    </div>
+                    <div class="frosted-card">
+                        <h3 class="frosted-card-title">Fait pour restauration</h3>
+                        <p class="frosted-card-text">Développé spécifiquement pour l'industrie alimentaire</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 9: CTA -->
+            <div class="slide">
+                <img src="assets/pivot-logo.png" class="logo" alt="Pivot">
+                <h1>Prêt à transformer votre gestion?</h1>
+                <p class="subtitle">Rejoignez des centaines de restaurants qui ont déjà choisi Pivot pour optimiser leurs opérations</p>
+                <a href="https://pivotapp.ca" target="_blank" class="cta-button">Demander une démo</a>
+                <div class="contact-info">
+                    <p>📧 contact@pivotapp.ca</p>
+                    <p>📞 1-800-PIVOT-1</p>
+                    <p>🌐 www.pivotapp.ca</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="navigation">
+            <button class="nav-button" id="prevBtn" onclick="previousSlide()">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <path d="M15.41 7.41L14 6L8 12L14 18L15.41 16.59L10.83 12Z"/>
+                </svg>
+            </button>
+            <button class="nav-button" id="nextBtn" onclick="nextSlide()">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <path d="M10 6L8.59 7.41L13.17 12L8.59 16.59L10 18L16 12Z"/>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const totalSlides = 9;
+
+        function updateProgressBar() {
+            const progress = ((currentSlide + 1) / totalSlides) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+        }
+
+        function updateNavigation() {
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            
+            prevBtn.disabled = currentSlide === 0;
+            nextBtn.disabled = currentSlide === totalSlides - 1;
+        }
+
+        function showSlide(n) {
+            const slides = document.querySelectorAll('.slide');
+            const slidesWrapper = document.getElementById('slidesWrapper');
+            
+            if (n >= totalSlides) currentSlide = totalSlides - 1;
+            if (n < 0) currentSlide = 0;
+            
+            slides.forEach(slide => slide.classList.remove('active'));
+            slides[currentSlide].classList.add('active');
+            
+            slidesWrapper.style.transform = `translateX(-${currentSlide * 100}vw)`;
+            updateProgressBar();
+            updateNavigation();
+            
+            // Animate counter numbers for stats slide
+            if (currentSlide === 1) {
+                animateCounters();
+            }
+        }
+
+        function nextSlide() {
+            if (currentSlide < totalSlides - 1) {
+                currentSlide++;
+                showSlide(currentSlide);
+            }
+        }
+
+        function previousSlide() {
+            if (currentSlide > 0) {
+                currentSlide--;
+                showSlide(currentSlide);
+            }
+        }
+
+        function animateCounters() {
+            const counters = document.querySelectorAll('.stat-number');
+            counters.forEach(counter => {
+                const target = parseFloat(counter.getAttribute('data-target'));
+                const increment = target / 150; // Animation speed
+                let current = 0;
+                
+                const updateCounter = () => {
+                    if (current < target) {
+                        current += increment;
+                        if (target === 99.9) {
+                            counter.textContent = current.toFixed(1);
+                        } else {
+                            counter.textContent = Math.ceil(current);
+                        }
+                        setTimeout(updateCounter, 10);
+                    } else {
+                        if (target === 99.9) {
+                            counter.textContent = target.toFixed(1);
+                        } else {
+                            counter.textContent = target;
+                        }
+                    }
+                };
+                updateCounter();
+            });
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                e.preventDefault();
+                nextSlide();
+            } else if (e.key === 'f' || e.key === 'F') {
+                if (!document.fullscreenElement) {
+                    document.documentElement.requestFullscreen();
+                } else {
+                    document.exitFullscreen();
+                }
+            } else if (e.key === 'Escape' && document.fullscreenElement) {
+                document.exitFullscreen();
+            } else if (e.key === 'ArrowLeft') {
+                e.preventDefault();
+                previousSlide();
+            }
+        });
+
+        // Touch/swipe navigation
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        document.addEventListener('touchstart', function(e) {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+
+        document.addEventListener('touchend', function(e) {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        });
+
+        function handleSwipe() {
+            const swipeThreshold = 50;
+            const diff = touchStartX - touchEndX;
+            
+            if (Math.abs(diff) > swipeThreshold) {
+                if (diff > 0) {
+                    nextSlide();
+                } else {
+                    previousSlide();
+                }
+            }
+        }
+
+        // Click navigation
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.nav-button') && !e.target.closest('.cta-button')) {
+                const rect = document.documentElement.getBoundingClientRect();
+                const x = e.clientX;
+                const width = rect.width;
+                
+                if (x > width / 2) {
+                    nextSlide();
+                } else {
+                    previousSlide();
+                }
+            }
+        });
+
+        // Initialize
+        updateProgressBar();
+        updateNavigation();
+    </script>
 </body>
 </html>
